@@ -79,7 +79,8 @@ Classes are organized in the java folder of the app project. These classes are t
 ## Testing
 
 Tests can be found here: https://github.com/azipis/Cosc310A3Testing/tree/main/app/src/androidTest/java/com/example/javabucksim
----
+
+~~~
 ## Features Added for Individual Project
 1. Implemented MenuBar Drawer for all activities
     - Allows the user to access all the pages and activities everywhere in the app.
