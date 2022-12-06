@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.example.javabucksim.databinding.ActivityTestBinding;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -18,7 +19,9 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-public class test extends AppCompatActivity {
+public class test extends DrawerBaseActivity {
+
+    ActivityTestBinding activityTestBinding;
 
     private static final float BAR_SPACE = 0.05f;
     private static final float BAR_WIDTH = 0.15f;
@@ -39,7 +42,8 @@ public class test extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        activityTestBinding = ActivityTestBinding.inflate(getLayoutInflater());
+        setContentView(activityTestBinding.getRoot());
 
         // initializing variable for bar chart.
         barChart = findViewById(R.id.idBarChart);

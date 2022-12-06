@@ -76,7 +76,7 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
                 overridePendingTransition(0, 0);
                 startActivity(intent);
                 break;
-            case R.id.nav_veiw_items:
+            case R.id.nav_view_items:
                 Intent intent1 = new Intent(this, Categories.class);
                 overridePendingTransition(0, 0);
                 startActivity(intent1);
