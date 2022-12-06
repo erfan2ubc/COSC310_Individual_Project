@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class createAccount extends DrawerBaseActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
     Map<String, Object> newUser;
+    Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,16 @@ public class createAccount extends DrawerBaseActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        back = findViewById(R.id.backButton);
+
         setupSpinner();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 

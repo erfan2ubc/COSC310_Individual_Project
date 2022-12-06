@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.example.javabucksim.DrawerBaseActivity;
@@ -32,6 +33,7 @@ public class editUsers extends DrawerBaseActivity {
     UserRVAdapter myAdapter;
     FirebaseFirestore db;
     UserRVAdapter.OnItemClickListener listener;
+    Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +50,21 @@ public class editUsers extends DrawerBaseActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        back = findViewById(R.id.backButton);
+
         db = FirebaseFirestore.getInstance();
         userArrayList = new ArrayList<User>();
         setOnClickListener();
         myAdapter = new UserRVAdapter(editUsers.this, userArrayList, listener);
 
         recyclerView.setAdapter(myAdapter);
-        
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 

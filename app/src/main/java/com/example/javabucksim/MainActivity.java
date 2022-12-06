@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -288,7 +287,59 @@ public class MainActivity extends DrawerBaseActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
 
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    //menuMethods
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                break;
+            case R.id.nav_place_order:
+                Intent intent = new Intent(MainActivity.this,autoOrder.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_view_items:
+                Intent intent1 = new Intent(MainActivity.this,Categories.class);
+                startActivity(intent1);
+                break;
+            case R.id.nav_profile:
+                Intent intent2 = new
+                Intent(MainActivity.this,settingsActivity.class);
+                intent2.putExtras(bundle);
+                startActivity(intent2);
+                break;
+            case R.id.nav_logout:
+                mFirebaseAuth.signOut();
+                Intent intent3 = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent3);
+                finish();
+                break;
+            case R.id.nav_veiw_report:
+                Intent intent4 = new Intent(MainActivity.this, reportActivity.class);
+                startActivity(intent4);
+                break;
+        }
+        return true;
+    }
+    void setMenuNameAndEmail() {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            DesignToast.makeText(MainActivity.this, "Successfully logged out", DesignToast.LENGTH_SHORT, DesignToast.TYPE_SUCCESS).show();
+        } else {
+            String uid = user.getUid();
+
+        }
+    }
 
 //    void setMenuNameAndEmail() {
 //        user = FirebaseAuth.getInstance().getCurrentUser();

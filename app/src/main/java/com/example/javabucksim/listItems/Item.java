@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.javabucksim.DrawerBaseActivity;
 import com.example.javabucksim.R;
+
 import com.example.javabucksim.databinding.ActivityItemBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -16,16 +17,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+
 public class Item extends DrawerBaseActivity {
 
     ActivityItemBinding activityItemBinding;
 
     TextView productName, smol, mid, chonk, one, two, three, price12, price16, price20;
     Button back;
-    String sCalories, sProtein, sFat, sCarbs, sFiber, sSugar;
-    String mCalories, mProtein, mFat, mCarbs, mFiber, mSugar;
-    String cCalories, cProtein, cFat, cCarbs, cFiber, cSugar;
-    private DatabaseReference mDatabase;
+//    String sCalories, sProtein, sFat, sCarbs, sFiber, sSugar;
+//    String mCalories, mProtein, mFat, mCarbs, mFiber, mSugar;
+//    String cCalories, cProtein, cFat, cCarbs, cFiber, cSugar;
+//    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,6 @@ public class Item extends DrawerBaseActivity {
         activityItemBinding = ActivityItemBinding.inflate(getLayoutInflater());
         setContentView(activityItemBinding.getRoot());
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         back = findViewById(R.id.backButton);
         productName = findViewById(R.id.productName);
         smol = findViewById(R.id.smol);
