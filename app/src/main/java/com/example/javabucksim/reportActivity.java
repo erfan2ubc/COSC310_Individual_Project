@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.designtoast.DesignToast;
+import com.example.javabucksim.databinding.ActivityReportBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,16 +30,21 @@ import java.io.IOException;
 import java.util.Map;
 
 
-public class reportActivity extends AppCompatActivity {
+public class reportActivity extends DrawerBaseActivity {
+
+    ActivityReportBinding activityReportBinding;
+
     private FirebaseAuth mFirebaseAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     StatisticsReport statReport = new StatisticsReport();
     Button back;
+    Button graph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report);
+        activityReportBinding = ActivityReportBinding.inflate(getLayoutInflater());
+        setContentView(activityReportBinding.getRoot());
 
         back = findViewById(R.id.backButton);
 
@@ -62,6 +68,13 @@ public class reportActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        graph = findViewById(R.id.graph);
+        graph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                graphActivity();
             }
         });
     }
@@ -178,5 +191,9 @@ public class reportActivity extends AppCompatActivity {
             DesignToast.makeText(getApplicationContext(),"Error saving report",DesignToast.LENGTH_SHORT, DesignToast.TYPE_ERROR).show();
             //Toast.makeText(getApplicationContext(),"Error saving report",Toast.LENGTH_SHORT).show();
         }
+    }
+    void graphActivity() {
+        Intent intent = new Intent(reportActivity.this,test.class);
+        startActivity(intent);
     }
 }

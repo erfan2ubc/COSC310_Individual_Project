@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.javabucksim.DrawerBaseActivity;
 import com.example.javabucksim.MainActivity;
 import com.example.javabucksim.R;
+import com.example.javabucksim.databinding.ActivityAutoordBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,8 +26,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class autoOrder extends AppCompatActivity {
+public class autoOrder extends DrawerBaseActivity {
+
+    ActivityAutoordBinding activityAutoordBinding;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     private FirebaseAuth mFirebaseAuth;
     RecyclerView recyclerView;
     ArrayList<orderTile> orderItems= new ArrayList<>();
@@ -40,7 +46,8 @@ public class autoOrder extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_autoord);
+        activityAutoordBinding = ActivityAutoordBinding.inflate(getLayoutInflater());
+        setContentView(activityAutoordBinding.getRoot());
         //need to get the data from firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
         recyclerView = findViewById(R.id.orderView);

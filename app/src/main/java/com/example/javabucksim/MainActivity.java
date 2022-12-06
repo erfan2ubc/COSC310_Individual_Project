@@ -19,10 +19,15 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.chad.designtoast.DesignToast;
+import com.example.javabucksim.databinding.ActivityMainBinding;
 import com.example.javabucksim.listItems.Categories;
 import com.example.javabucksim.login.loginActivity;
 import com.example.javabucksim.orders.autoOrder;
 import com.example.javabucksim.settings.settingsActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -37,7 +42,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends DrawerBaseActivity {
+
+    ActivityMainBinding activityMainBinding;
+
+    GoogleSignInOptions googleSignInOptions;
+    GoogleSignInClient googleSignInClient;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mFirebaseAuth;
@@ -62,24 +72,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityMainBinding.getRoot());
 
-        //menu
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navView);
-        toolbar = findViewById(R.id.toolbar);
+        //googleSignIn
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        googleSignInClient = GoogleSignIn.getClient(this,googleSignInOptions);
 
-        //toolbar
-        setSupportActionBar(toolbar);
-        //nav_drawer
-        navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        drawerLayout.setScrimColor(Color.parseColor("#32000000"));
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account != null) {
+            String personName = account.getDisplayName();
+            String personEmail = account.getEmail();
+            menuName.setText(personName);
+            menuEmail.setText(personEmail);
+        }
         //headerInfo
-        setMenuNameAndEmail();
+//        setMenuNameAndEmail();
 
 
 
@@ -278,6 +286,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+
     @Override
     public void onBackPressed() {
 
@@ -329,21 +338,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             String uid = user.getUid();
 
-
-            DocumentReference documentReference = db.collection("users").document(uid);
-            documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-                @Override
-                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                    menuFirstNameString = value.getString("firstName");
-                    menuLastNameString = value.getString("lastName");
-                    menuEmailString = value.getString("email");
-                    View headView = navigationView.getHeaderView(0);
-                    TextView navUserName = (TextView) headView.findViewById(R.id.menuName);
-                    TextView navUserEmail = (TextView) headView.findViewById(R.id.menuEmail);
-                    navUserName.setText(menuFirstNameString + " " + menuLastNameString);
-                    navUserEmail.setText(menuEmailString);
-                }
-            });
         }
     }
+
+//    void setMenuNameAndEmail() {
+//        user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user == null) {
+//            DesignToast.makeText(MainActivity.this, "Successfully logged out", DesignToast.LENGTH_SHORT, DesignToast.TYPE_SUCCESS).show();
+//        } else {
+//            String uid = user.getUid();
+//
+//
+//            DocumentReference documentReference = db.collection("users").document(uid);
+//            documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+//                @Override
+//                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+//                    menuFirstNameString = value.getString("firstName");
+//                    menuLastNameString = value.getString("lastName");
+//                    menuEmailString = value.getString("email");
+//                    View headView = navigationView.getHeaderView(0);
+//                    TextView navUserName = (TextView) headView.findViewById(R.id.menuName);
+//                    TextView navUserEmail = (TextView) headView.findViewById(R.id.menuEmail);
+//                    navUserName.setText(menuFirstNameString + " " + menuLastNameString);
+//                    navUserEmail.setText(menuEmailString);
+//                }
+//            });
+//        }
+//    }
 }

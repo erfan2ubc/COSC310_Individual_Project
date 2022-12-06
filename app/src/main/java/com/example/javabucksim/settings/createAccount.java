@@ -12,7 +12,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.chad.designtoast.DesignToast;
+import com.example.javabucksim.DrawerBaseActivity;
 import com.example.javabucksim.R;
+import com.example.javabucksim.databinding.ActivityCreateAccountBinding;
 import com.example.javabucksim.login.loginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,7 +27,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class createAccount extends AppCompatActivity {
+public class createAccount extends DrawerBaseActivity {
+
+    ActivityCreateAccountBinding activityCreateAccountBinding;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
@@ -35,7 +39,8 @@ public class createAccount extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_account);
+        activityCreateAccountBinding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
+        setContentView(activityCreateAccountBinding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
 
